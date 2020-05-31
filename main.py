@@ -101,6 +101,8 @@ while not game_over:
     score_text = str(redplayer_score) + ':' + str(bluplayer_score)
     score_label = score_font.render(score_text, 1, YELLOW)
     score_pos = [470, 0]
+
+    ball_speed = ball_collision + 3
     # Defining the rectangle of each object
 
     redplayer_rec = pygame.Rect(redplayer_pos[0], redplayer_pos[1], redplayer_size[0], redplayer_size[1])
@@ -136,12 +138,14 @@ while not game_over:
 
     # Logic for ball collision
     if ball_rec.colliderect(redplayer_rec):
-        ball_pos[0] += 5
-        ball_change_in_pos[0] = ball_change_in_pos[0] * -1
+        ball_collision += 1
+        ball_pos[0] += abs(ball_speed) + 3
+        ball_change_in_pos[0] = abs(ball_speed)
 
     if ball_rec.colliderect(bluplayer_rec):
-        ball_pos[0] -= 5
-        ball_change_in_pos[0] = ball_change_in_pos[0] * -1
+        ball_collision += 1
+        ball_pos[0] -= abs(ball_speed) + 3
+        ball_change_in_pos[0] = -abs(ball_speed)
 
     if ball_rec.colliderect(topborder_rec):
         ball_pos[1] += 5
@@ -152,11 +156,18 @@ while not game_over:
         ball_change_in_pos[1] = ball_change_in_pos[1] * -1
 
     # Logic for getting points
-    if ball_pos[0] < 0:
+    # It also reset the ball collision and speed and update the change in pos
+    if ball_pos[0] < 0:  # Blu get a point
+        ball_collision = 0
+        ball_speed = 0
+        ball_change_in_pos[0] = -3
         bluplayer_score += 1
         ball_pos[0] = 500
 
-    if ball_pos[0] > WIDTH:
+    if ball_pos[0] > WIDTH:  # Red get a point
+        ball_collision = 0
+        ball_speed = 0
+        ball_change_in_pos[0] = 3
         redplayer_score += 1
         ball_pos[0] = 500
 
