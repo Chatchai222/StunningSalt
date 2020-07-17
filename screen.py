@@ -31,6 +31,29 @@ class Screen:
         score_label = self.font.render(score_text, 1, color)
         self.screen.blit(score_label, (self.width/2 - 20, self.height/20 - 20))
 
+    def player_wins(self, redplayer, bluplayer, goal=3):
+        if redplayer.score >= goal or bluplayer.score >= goal:
+            return True
+
+    def tell_who_wins(self, redplayer, bluplayer):
+        # The setting of go up and down is to prevent the bug of not receiving command to start game fresh
+        if redplayer.score > bluplayer.score:
+            redplayer.score = 0
+            bluplayer.score = 0
+            redplayer.go_up = False
+            redplayer.go_down = False
+            bluplayer.go_up = False
+            bluplayer.go_down = False
+            return 'Red'
+        if bluplayer.score > redplayer.score:
+            redplayer.score = 0
+            bluplayer.score = 0
+            redplayer.go_up = False
+            redplayer.go_down = False
+            bluplayer.go_up = False
+            bluplayer.go_down = False
+            return 'Blue'
+
     # This updates the screen with all the rect, score and the clock
     def update_screen(self, redplayer, bluplayer, ball, topborder, bottomborder):
         self.refresh_background()
@@ -43,6 +66,15 @@ class Screen:
 
         self.clock.tick(self.clock_tick)
         pygame.display.update()
+
+
+
+
+
+
+
+
+
 
 
 

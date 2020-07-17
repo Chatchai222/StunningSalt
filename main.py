@@ -97,6 +97,8 @@ while not game_over:
                 bp_go_down = False
 
     # Updating the variable (I dont know why stuff dont update when I change its dependent variable?)
+    # Ans: python only update the variable you referred it to, NOT the dependent variable
+    # that used the referred variable)
     score_font = pygame.font.SysFont("monospace", 35)
     score_text = str(redplayer_score) + ':' + str(bluplayer_score)
     score_label = score_font.render(score_text, 1, YELLOW)

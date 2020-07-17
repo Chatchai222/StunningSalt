@@ -15,7 +15,6 @@ class Player(pygame.Rect):
         self.color = color
         self.go_up = go_up
         self.go_down = go_down
-        self.rect = [self.x, self.y, self.xsize, self.ysize]
 
     # Old way of drawing
     def _draw(self, screen):
@@ -49,11 +48,19 @@ class PlayerRed(Player):
                 self.go_down = False
 
     # Update the x and y position based on if they are currently going up or down
-    def update_movement(self):
+    def update_movement(self, topborder, bottomborder):
         if self.go_up:
             self.y -= self.speed
         if self.go_down:
             self.y += self.speed
+
+        # For prevent from entering top border
+        if self.colliderect(topborder):
+            self.y += self.speed
+
+        # For prevent from entering bottom border
+        if self.colliderect(bottomborder):
+            self.y -= self.speed
 
 # The blu player on the right handside of the screen
 class PlayerBlu(Player):
@@ -75,11 +82,21 @@ class PlayerBlu(Player):
             if event.key == pygame.K_DOWN:
                 self.go_down = False
 
-    def update_movement(self):
+    def update_movement(self, topborder, bottomborder):
         if self.go_up:
             self.y -= self.speed
         if self.go_down:
             self.y += self.speed
+
+        # For prevent from entering top border
+        if self.colliderect(topborder):
+            self.y += self.speed
+
+        # For prevent from entering bottom border
+        if self.colliderect(bottomborder):
+            self.y -= self.speed
+
+
 
 
 class Border(pygame.Rect):
